@@ -3,6 +3,7 @@ package br.com.yanaga.green.webflow.configuration.root;
 import org.springframework.beans.factory.aspectj.EnableSpringConfigured;
 import org.springframework.context.annotation.AdviceMode;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ScopedProxyMode;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Controller;
 @EnableSpringConfigured
 @EnableAsync(mode = AdviceMode.ASPECTJ)
 @ComponentScan(basePackageClasses = { GreenConfig.class }, scopedProxy = ScopedProxyMode.TARGET_CLASS, excludeFilters = @Filter(Controller.class))
+@ImportResource("classpath*:META-INF/spring/applicationContext-security.xml")
 public class GreenConfig {
 
 }

@@ -13,6 +13,7 @@ import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.request.RequestContextListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
+import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.servlet.DispatcherServlet;
 
 import br.com.yanaga.green.webflow.configuration.root.GreenConfig;
@@ -43,11 +44,18 @@ public class GreenWebAppInitializer implements WebApplicationInitializer {
 	}
 
 	private void registerFilters(ServletContext servletContext) {
+		registerSpringSecurityFilter(servletContext);
 		registerFileUploadFilter(servletContext);
 	}
 
 	private void registerServlets(ServletContext servletContext) {
 		registerWebflowServlet(servletContext);
+	}
+
+	private void registerSpringSecurityFilter(ServletContext servletContext) {
+		FilterRegistration.Dynamic springSecurityFilterChain = servletContext.addFilter("springSecurityFilterChain",
+				new DelegatingFilterProxy("springSecurityFilterChain"));
+		springSecurityFilterChain.addMappingForUrlPatterns(DEFAULT_DISPATCHER_TYPES, true, "/*");
 	}
 
 	private void registerFileUploadFilter(ServletContext servletContext) {
