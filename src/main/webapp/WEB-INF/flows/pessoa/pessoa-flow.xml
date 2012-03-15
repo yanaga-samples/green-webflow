@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
+
+	<persistence-context />
+
+	<view-state id="pessoaList">
+		<on-entry>
+			<evaluate expression="pessoaController.newFiltro()" result="viewScope.filtro" />
+		</on-entry>
+		<on-render>
+			<evaluate expression="pessoaController.filtrar(filtro)" result="viewScope.pessoas" result-type="dataModel" />
+		</on-render>
+		<transition on="filtrar">
+			<evaluate expression="persistenceContext.clear()" />
+		</transition>
+		<transition on="novo" to="pessoaEdit">
+			<evaluate expression="pessoaController.newPessoa()" result="flowScope.pessoa" />
+		</transition>
+		<transition on="editar" to="pessoaEdit">
+			<evaluate expression="pessoas.selectedRow" result="flowScope.pessoa" />
+		</transition>
+	</view-state>
+
+	<view-state id="pessoaEdit">
+		<transition on="salvar" to="ok">
+			<evaluate expression="pessoaController.salvar(pessoa, messageContext)" />
+		</transition>
+		<transition on="cancelar" to="cancel" />
+	</view-state>
+
+	<end-state id="ok" commit="true" />
+	<end-state id="cancel" />
+</flow>

@@ -1,0 +1,17 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/template/blank.xhtml">
+	<ui:define name="body">
+		<h:form>
+			<p:panel header="Cadastro de Pessoa">
+				<h:panelGrid columns="3">
+					<h:outputLabel for="nome" value="Nome:" />
+					<p:inputText id="nome" value="#{pessoa.nome}" size="60" />
+					<p:message for="nome" />
+				</h:panelGrid>
+			</p:panel>
+			<p:commandButton value="Salvar" action="salvar" />
+			<p:commandButton value="Cancelar" action="cancelar" immediate="true" style="float:right" />
+		</h:form>
+	</ui:define>
+</ui:composition>
